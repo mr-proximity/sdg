@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG Goal 1 Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f4f4f9;
+            margin: 0;
+        }
+        .quiz-container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        .option {
+            display: block;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .option:hover {
+            background: #eee;
+        }
+        .correct {
+            background: #4CAF50 !important;
+            color: white;
+            border-color: #4CAF50;
+        }
+        .wrong {
+            background: #FF5733 !important;
+            color: white;
+            border-color: #FF5733;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        #next-btn {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2 id="question">Question</h2>
+        <div class="option" onclick="checkAnswer(this, 0)"></div>
+        <div class="option" onclick="checkAnswer(this, 1)"></div>
+        <div class="option" onclick="checkAnswer(this, 2)"></div>
+        <div class="option" onclick="checkAnswer(this, 3)"></div>
+        <p id="result"></p>
+        <button id="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+    
+    <script>
+        const quizData = [
+            {question: "What is the main goal of SDG 1?", options: ["Quality Education", "Clean Water & Sanitation", "No Poverty", "Climate Action"], correct: 2},
+            {question: "Which organization leads global efforts to achieve SDG 1?", options: ["WHO", "UNDP", "IMF", "WTO"], correct: 1},
+            {question: "What is one key target of SDG 1?", options: ["Eliminate poverty in all forms", "Ensure gender equality", "Promote affordable housing", "Reduce greenhouse gases"], correct: 0},
+            {question: "Which continent has the highest poverty rates?", options: ["Asia", "Europe", "Africa", "North America"], correct: 2},
+            {question: "What is the primary cause of poverty globally?", options: ["Lack of education", "Climate change", "Corruption", "Economic recession"], correct: 0},
+            {question: "Which region has made the most progress in reducing poverty?", options: ["Latin America", "South Asia", "Sub-Saharan Africa", "East Asia & Pacific"], correct: 3},
+            {question: "How does SDG 1 plan to end poverty?", options: ["Cash transfers", "Employment opportunities", "Access to resources", "All of the above"], correct: 3},
+            {question: "Which is a key indicator of poverty reduction?", options: ["GDP growth", "Literacy rate", "Access to clean water", "Percentage living below $1.90/day"], correct: 3},
+            {question: "What role do governments play in SDG 1?", options: ["Enforcing policies", "Providing social protection", "Creating jobs", "All of the above"], correct: 3},
+            {question: "Which initiative directly supports SDG 1?", options: ["Universal Basic Income", "Paris Agreement", "Net Zero Emissions", "Mars Colonization"], correct: 0}
+        ];
+        
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        
+        function loadQuestion() {
+            let q = quizData[currentQuestion];
+            document.getElementById("question").innerText = q.question;
+            let options = document.querySelectorAll(".option");
+            options.forEach((opt, index) => {
+                opt.innerText = q.options[index];
+                opt.classList.remove("correct", "wrong");
+                opt.onclick = () => checkAnswer(opt, index);
+            });
+            document.getElementById("result").innerText = "";
+            document.getElementById("next-btn").style.display = "none";
+            answered = false;
+        }
+        
+        function checkAnswer(option, index) {
+            if (answered) return;
+            answered = true;
+            let correctIndex = quizData[currentQuestion].correct;
+            if (index === correctIndex) {
+                option.classList.add("correct");
+                score++;
+            } else {
+                option.classList.add("wrong");
+                document.querySelectorAll(".option")[correctIndex].classList.add("correct");
+            }
+            document.getElementById("next-btn").style.display = "block";
+        }
+        
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+        
+        function showResult() {
+            document.querySelector(".quiz-container").innerHTML = `<h2>Quiz Completed!</h2><p>Your Score: ${score}/${quizData.length}</p>`;
+        }
+        
+        loadQuestion();
+    </script>
+</body>
+</html>

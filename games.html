@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games - Sustainability Hub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sustainability Games</h1>
+    </header>
+    
+    <section class="game">
+        <h2>Sustainability Quiz</h2>
+        <p>Test your knowledge about eco-friendly practices.</p>
+        <button onclick="startQuiz()">Start Quiz</button>
+        <div id="quiz"></div>
+    </section>
+
+    <script>
+        function startQuiz() {
+            document.getElementById("quiz").innerHTML = `
+                <p>What is the best way to reduce waste?</p>
+                <button onclick="checkAnswer('a')">Recycle</button>
+                <button onclick="checkAnswer('b')">Reduce & Reuse</button>
+                <p id="quizResult"></p>
+            `;
+        }
+        function checkAnswer(answer) {
+            document.getElementById("quizResult").innerText = answer === 'b' ? "Correct! Reducing waste is best." : "Try again! Recycling is good, but reducing is better.";
+        }
+    </script>
+    
+    <footer>
+        <p>&copy; 2025 Sustainability Hub</p>
+    </footer>
+</body>
+</html>
